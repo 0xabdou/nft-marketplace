@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  @apply m-0 h-screen w-screen overflow-hidden p-0;
+}
+
+#__next {
+  @apply h-full w-full;
+}
