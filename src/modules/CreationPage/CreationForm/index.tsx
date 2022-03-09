@@ -18,9 +18,6 @@ type CreationFormProps = {
 export const creationValidationSchema = Yup.object().shape({
   name: Yup.string().required("Must enter a name"),
   description: Yup.string().required("Must enter a description"),
-  price: Yup.number().test("is_gt_zero", "Must enter a price", (value) => {
-    return typeof value == "number" && value > 0;
-  }),
   image: Yup.mixed().test("is_defined", "Must select an image", (value) =>
     Boolean(value)
   ),
