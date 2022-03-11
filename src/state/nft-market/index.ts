@@ -3,12 +3,15 @@ import { Contract } from "ethers";
 import { CreationValues } from "modules/CreationPage/CreationForm";
 import useSigner from "state/signer";
 import NFT_MARKET from "../../../artifacts/contracts/NFTMarket.sol/NFTMarket.json";
+import useOwnedNFTs from "./useOwnedNFTs";
 
 const NFT_MARKET_ADDRESS = process.env.NEXT_PUBLIC_NFT_MARKET_ADDRESS as string;
 
 const useNFTMarket = () => {
   const { signer } = useSigner();
   const nftMarket = new Contract(NFT_MARKET_ADDRESS, NFT_MARKET.abi, signer);
+
+  const ownedNFTs = useOwnedNFTs();
 
   const createNFT = async (values: CreationValues) => {
     try {
@@ -32,7 +35,7 @@ const useNFTMarket = () => {
     }
   };
 
-  return { createNFT };
+  return { createNFT, ...ownedNFTs };
 };
 
 export default useNFTMarket;
