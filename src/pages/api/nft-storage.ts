@@ -2,6 +2,7 @@ import formidable from "formidable";
 import { readFileSync, unlinkSync } from "fs";
 import { NextApiHandler } from "next";
 import { File, NFTStorage } from "nft.storage";
+import { tmpdir } from "os";
 
 const client = new NFTStorage({ token: `${process.env.NFT_STORAGE_KEY}` });
 
@@ -12,8 +13,7 @@ const handler: NextApiHandler = async (req, res) => {
   try {
     // Parse req body and save image in /tmp
     const data: any = await new Promise((res, rej) => {
-      const uploadDir = `${process.cwd()}/tmp`;
-      const form = formidable({ multiples: true, uploadDir });
+      const form = formidable({ multiples: true, uploadDir: tmpdir() });
       form.parse(req, (err, fields, files) => {
         if (err) rej(err);
         res({ ...fields, ...files });
