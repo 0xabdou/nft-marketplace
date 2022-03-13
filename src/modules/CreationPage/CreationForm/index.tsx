@@ -37,7 +37,7 @@ const CreationForm = ({ onSubmit }: CreationFormProps) => {
     >
       <Form className="flex">
         <ImagePicker name="image" className="mr-4" />
-        <div className="flex w-64 flex-col">
+        <div className="flex w-64 flex-col space-y-1">
           <FormikInput name="name" placeholder="name" />
           <TextArea name="description" placeholder="description..." />
           <SubmitButton />

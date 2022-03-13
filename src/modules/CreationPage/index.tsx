@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import EmptyState from "components/EmptyState";
 import useNFTMarket from "state/nft-market";
 import useSigner from "state/signer";
 import CreationForm from "./CreationForm";
@@ -8,12 +9,9 @@ const CreationPage = () => {
   const { createNFT } = useNFTMarket();
 
   return (
-    <div
-      className={classNames("flex h-full w-full flex-col", {
-        "items-center justify-center": !signer,
-      })}
-    >
-      {signer ? <CreationForm onSubmit={createNFT} /> : "Connect your wallet"}
+    <div className={classNames("flex h-full w-full flex-col")}>
+      {!signer && <EmptyState>Connect your wallet</EmptyState>}
+      {signer && <CreationForm onSubmit={createNFT} />}
     </div>
   );
 };
