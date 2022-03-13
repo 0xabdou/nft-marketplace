@@ -17,10 +17,8 @@ const OwnedPage = () => {
     ownedListedNFTs.length == 0;
   const loaded =
     signer &&
-    ownedNFTs &&
-    ownedListedNFTs &&
-    ownedNFTs.length > 0 &&
-    ownedListedNFTs.length > 0;
+    ((ownedNFTs && ownedNFTs.length) ||
+      (ownedListedNFTs && ownedListedNFTs.length));
 
   return (
     <div className="flex w-full flex-col">
