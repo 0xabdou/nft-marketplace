@@ -4,13 +4,26 @@ import * as Yup from "yup";
 import FormikInput from "../../../components/Input";
 import SubmitButton from "./SubmitButton";
 import TextArea from "./TextArea";
-import { Configuration, OpenAIApi } from "openai";
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_KEY,
-});
+function callDallE2API(inputString: string) {
+  // Define the URL of your API endpoint
+  const apiUrl = "http://localhost:8080/dalle/";
 
-const openai = new OpenAIApi(configuration);
+  // Create a POST request using the fetch() function and return the Promise
+  return fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ message: inputString }),
+  })
+    .then((response) => response.json()) // Parse the response as JSON
+    .then((data) => {
+      // 'data' will contain the response from the API
+      // The response might be directly the output string, so you don't need data.response
+      return data; // Return 'data' directly
+    });
+} 
 
 export type CreationValues = {
   name: string;
@@ -43,10 +56,21 @@ const CreationForm = ({ onSubmit }: CreationFormProps) => {
   ) => {
     // Make the API call to Dall-E 2 with the provided description and get the generated image
     try {
-      // const generatedImage = await callDallE2API(description)
-      const generatedImage = 'https://miro.medium.com/v2/resize:fit:1400/1*o0d9QxDcnVgeuQCJPZE2qA.png';
+      callDallE2API(description)
+        .then((outputString) => {
+          console.log("Description: ", description)
+          console.log("Output string: ", outputString)
+          setGeneratedImage(outputString);
+          console.log("Output from the Promise:", generatedImage);
+          // You can perform further operations with 'generatedImage' here
+        })
+        .catch((error) => {
+          console.error("Error occurred:", error);
+          // Handle the error if the Promise is rejected
+        });
+      // const generatedImage = 'https://miro.medium.com/v2/resize:fit:1400/1*o0d9QxDcnVgeuQCJPZE2qA.png';
       // Set the generated image URL in the component's state
-      setGeneratedImage(generatedImage);
+      // setGeneratedImage(generatedImage);
 
       // You can also set the generated image URL in the formik form state
       formikProps.setFieldValue("generatedImage", generatedImage);

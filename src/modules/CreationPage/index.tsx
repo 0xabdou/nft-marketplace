@@ -10,6 +10,7 @@ const CreationPage = () => {
   const { createNFT } = useNFTMarket();
 
   const onSubmit = async (values: CreationValues) => {
+    console.log(values);
     try {
       await createNFT(values);
       toast.success("You'll see your new NFT here shortly. Refresh the page.");
