@@ -1,4 +1,5 @@
-# NFT Marketplace
+# [DEPRECATED] NFT Marketplace
+Archiving this repo because the libraries used are old. There are new and better ways that you should instead learn. I will link the new course here if I end up making one.
 
 ![Typescript][typescript-badge]
 ![Solidity][solidity-badge]
